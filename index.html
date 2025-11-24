@@ -1,0 +1,794 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>FE風花雪月 妄想編成アプリ - モックアップ</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Hiragino Kaku Gothic ProN', 'Hiragino Sans', Meiryo, sans-serif;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            padding: 20px;
+            min-height: 100vh;
+        }
+
+        .container {
+            max-width: 1400px;
+            margin: 0 auto;
+            background: white;
+            border-radius: 12px;
+            box-shadow: 0 10px 40px rgba(0,0,0,0.2);
+            padding: 30px;
+        }
+
+        h1 {
+            color: #333;
+            margin-bottom: 30px;
+            text-align: center;
+            font-size: 28px;
+        }
+
+        .settings-section {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 20px;
+            margin-bottom: 30px;
+            padding: 20px;
+            background: #f5f5f5;
+            border-radius: 8px;
+        }
+
+        .setting-item {
+            display: flex;
+            flex-direction: column;
+            gap: 8px;
+        }
+
+        .setting-item label {
+            font-weight: bold;
+            color: #555;
+            font-size: 14px;
+        }
+
+        .setting-item select {
+            padding: 10px;
+            border: 2px solid #ddd;
+            border-radius: 6px;
+            font-size: 14px;
+            background: white;
+            cursor: pointer;
+        }
+
+        .setting-item select:hover {
+            border-color: #667eea;
+        }
+
+        .info-display {
+            padding: 15px;
+            background: #e3f2fd;
+            border-left: 4px solid #2196F3;
+            border-radius: 4px;
+            margin-bottom: 20px;
+        }
+
+        .info-display strong {
+            color: #1976D2;
+        }
+
+        .units-section {
+            margin-top: 30px;
+        }
+
+        .section-title {
+            font-size: 20px;
+            font-weight: bold;
+            margin-bottom: 15px;
+            color: #333;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+        }
+
+        .add-unit-btn {
+            background: #4CAF50;
+            color: white;
+            border: none;
+            padding: 10px 20px;
+            border-radius: 6px;
+            cursor: pointer;
+            font-size: 14px;
+            font-weight: bold;
+            transition: background 0.3s;
+        }
+
+        .add-unit-btn:hover {
+            background: #45a049;
+        }
+
+        .add-unit-btn:disabled {
+            background: #ccc;
+            cursor: not-allowed;
+        }
+
+        .units-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(320px, 1fr));
+            gap: 20px;
+            margin-top: 20px;
+        }
+
+        .unit-card {
+            border: 2px solid #ddd;
+            border-radius: 8px;
+            padding: 15px;
+            background: white;
+            transition: transform 0.2s, box-shadow 0.2s;
+        }
+
+        .unit-card:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 4px 12px rgba(0,0,0,0.1);
+        }
+
+        .unit-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 12px;
+        }
+
+        .unit-name {
+            font-size: 18px;
+            font-weight: bold;
+            color: #333;
+        }
+
+        .unit-house {
+            font-size: 12px;
+            color: #666;
+            background: #f0f0f0;
+            padding: 4px 8px;
+            border-radius: 4px;
+        }
+
+        .remove-unit-btn {
+            background: #f44336;
+            color: white;
+            border: none;
+            padding: 5px 10px;
+            border-radius: 4px;
+            cursor: pointer;
+            font-size: 12px;
+        }
+
+        .remove-unit-btn:hover {
+            background: #da190b;
+        }
+
+        .unit-details {
+            display: flex;
+            flex-direction: column;
+            gap: 10px;
+        }
+
+        .detail-row {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+
+        .detail-row label {
+            font-size: 13px;
+            color: #666;
+            min-width: 60px;
+        }
+
+        .detail-row select {
+            flex: 1;
+            padding: 6px;
+            border: 1px solid #ddd;
+            border-radius: 4px;
+            font-size: 13px;
+        }
+
+        .weapon-unique {
+            color: #ff9800;
+            font-weight: bold;
+        }
+
+        .weapon-taken {
+            color: #f44336;
+            font-size: 11px;
+            margin-left: 5px;
+        }
+
+        .support-pairs {
+            margin-top: 30px;
+            padding: 20px;
+            background: #fff3e0;
+            border-radius: 8px;
+            border: 2px solid #ff9800;
+        }
+
+        .support-pairs h3 {
+            color: #e65100;
+            margin-bottom: 15px;
+        }
+
+        .support-list {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 10px;
+        }
+
+        .support-pair {
+            background: white;
+            padding: 8px 12px;
+            border-radius: 6px;
+            border: 1px solid #ff9800;
+            font-size: 13px;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+        }
+
+        .support-pair select {
+            border: 1px solid #ddd;
+            padding: 4px 8px;
+            border-radius: 4px;
+            font-size: 12px;
+        }
+
+        .modal {
+            display: none;
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: rgba(0,0,0,0.5);
+            z-index: 1000;
+            justify-content: center;
+            align-items: center;
+        }
+
+        .modal-content {
+            background: white;
+            padding: 30px;
+            border-radius: 12px;
+            max-width: 600px;
+            width: 90%;
+            max-height: 80vh;
+            overflow-y: auto;
+        }
+
+        .modal-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 20px;
+        }
+
+        .modal-header h2 {
+            color: #333;
+        }
+
+        .close-btn {
+            background: #f44336;
+            color: white;
+            border: none;
+            padding: 8px 16px;
+            border-radius: 6px;
+            cursor: pointer;
+        }
+
+        .unit-list {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));
+            gap: 10px;
+        }
+
+        .unit-option {
+            padding: 10px;
+            border: 2px solid #ddd;
+            border-radius: 6px;
+            cursor: pointer;
+            text-align: center;
+            transition: all 0.2s;
+        }
+
+        .unit-option:hover {
+            background: #e3f2fd;
+            border-color: #2196F3;
+        }
+
+        .unit-option.disabled {
+            opacity: 0.5;
+            cursor: not-allowed;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1>⚔️ FE風花雪月 妄想編成アプリ ⚔️</h1>
+
+        <!-- 設定セクション -->
+        <div class="settings-section">
+            <div class="setting-item">
+                <label>ストーリー</label>
+                <select id="storyRoute">
+                    <option value="crimsonFlower">紅花</option>
+                    <option value="silverSnow">銀雪</option>
+                    <option value="azureMoon">蒼月</option>
+                    <option value="verdantWind">翠風</option>
+                </select>
+            </div>
+            <div class="setting-item">
+                <label>難易度</label>
+                <select id="difficulty">
+                    <option value="normal">ノーマル</option>
+                    <option value="hard">ハード</option>
+                    <option value="lunatic">ルナティック</option>
+                </select>
+            </div>
+            <div class="setting-item">
+                <label>主人公</label>
+                <select id="protagonist">
+                    <option value="ベレト">ベレト</option>
+                    <option value="ベレス">ベレス</option>
+                </select>
+            </div>
+        </div>
+
+        <!-- 情報表示 -->
+        <div class="info-display">
+            <strong>最大出撃人数:</strong> <span id="maxDeployment">10</span>人 | 
+            <strong>現在のメンバー:</strong> <span id="currentCount">0</span> / 20人
+        </div>
+
+        <!-- ユニット一覧 -->
+        <div class="units-section">
+            <div class="section-title">
+                <span>編成メンバー</span>
+                <button class="add-unit-btn" id="addUnitBtn">+ メンバーを追加</button>
+            </div>
+            <div class="units-grid" id="unitsGrid">
+                <!-- ユニットカードがここに動的に追加されます -->
+            </div>
+        </div>
+
+    </div>
+
+    <!-- ユニット追加モーダル -->
+    <div class="modal" id="addUnitModal">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h2>スカウト</h2>
+                <button class="close-btn" onclick="closeAddUnitModal()">閉じる</button>
+            </div>
+            <div class="unit-list" id="availableUnitsList">
+                <!-- 利用可能なユニットがここに追加されます -->
+            </div>
+        </div>
+    </div>
+
+    <script>
+        // モックデータ
+        const mockUnits = [
+            { name: 'ベレト', house: 'その他', type: 'ベレト' },
+            { name: 'ベレス', house: 'その他', type: 'ベレス' },
+            { name: 'エーデルガルト', house: '黒鷲', type: 'エーデルガルト' },
+            { name: 'ヒューベルト', house: '黒鷲', type: '男性' },
+            { name: 'フェルディナント', house: '黒鷲', type: '男性' },
+            { name: 'リンハルト', house: '黒鷲', type: '男性' },
+            { name: 'カスパル', house: '黒鷲', type: '男性' },
+            { name: 'ベルナデッタ', house: '黒鷲', type: '女性' },
+            { name: 'ドロテア', house: '黒鷲', type: '女性' },
+            { name: 'ペトラ', house: '黒鷲', type: '女性' },
+            { name: 'ディミトリ', house: '青獅子', type: 'ディミトリ' },
+            { name: 'ドゥドゥー', house: '青獅子', type: '男性' },
+            { name: 'フェリクス', house: '青獅子', type: '男性' },
+            { name: 'メルセデス', house: '青獅子', type: '女性' },
+            { name: 'アッシュ', house: '青獅子', type: '男性' },
+            { name: 'アネット', house: '青獅子', type: '女性' },
+            { name: 'シルヴァン', house: '青獅子', type: '男性' },
+            { name: 'イングリット', house: '青獅子', type: '女性' },
+            { name: 'クロード', house: '金鹿', type: 'クロード' },
+            { name: 'ローレンツ', house: '金鹿', type: '男性' },
+            { name: 'ラファエル', house: '金鹿', type: '男性' },
+            { name: 'イグナーツ', house: '金鹿', type: '男性' },
+            { name: 'リシテア', house: '金鹿', type: '女性' },
+            { name: 'マリアンヌ', house: '金鹿', type: '女性' },
+            { name: 'ヒルダ', house: '金鹿', type: '女性' },
+            { name: 'レオニー', house: '金鹿', type: '女性' },
+            { name: 'セテス', house: 'その他', type: '男性' },
+            { name: 'フレン', house: 'その他', type: '女性' },
+            { name: 'ハンネマン', house: 'その他', type: '男性' },
+            { name: 'マヌエラ', house: 'その他', type: '女性' },
+        ];
+
+        const mockWeapons = [
+            // なし（常に利用可能）
+            { name: 'なし', unique: false, crimsonFlower: true, silverSnow: true, azureMoon: true, verdantWind: true },
+            
+            // Weapons.csvのデータに基づく武器
+            { name: 'ベガルタの剣', unique: false, crimsonFlower: false, silverSnow: false, azureMoon: false, verdantWind: true },
+            { name: '雷霆', unique: true, crimsonFlower: true, silverSnow: true, azureMoon: true, verdantWind: true },
+            { name: 'ブルトガング', unique: true, crimsonFlower: true, silverSnow: true, azureMoon: true, verdantWind: true },
+            { name: '天帝の剣', unique: true, crimsonFlower: true, silverSnow: true, azureMoon: true, verdantWind: true },
+            { name: '破裂の槍', unique: true, crimsonFlower: true, silverSnow: true, azureMoon: true, verdantWind: true },
+            { name: 'アラドヴァル', unique: true, crimsonFlower: false, silverSnow: false, azureMoon: true, verdantWind: false },
+            { name: 'ルーン', unique: true, crimsonFlower: true, silverSnow: true, azureMoon: true, verdantWind: true },
+            { name: 'アッサルの槍', unique: false, crimsonFlower: true, silverSnow: true, azureMoon: true, verdantWind: true },
+            { name: 'フライクーゲル', unique: true, crimsonFlower: false, silverSnow: true, azureMoon: true, verdantWind: true },
+            { name: '打ち砕くもの', unique: true, crimsonFlower: false, silverSnow: false, azureMoon: true, verdantWind: false },
+            { name: 'ウコンバサラの斧', unique: false, crimsonFlower: false, silverSnow: true, azureMoon: true, verdantWind: true },
+            { name: 'アイムール', unique: true, crimsonFlower: true, silverSnow: false, azureMoon: false, verdantWind: false },
+            { name: 'タスラムの弓', unique: false, crimsonFlower: false, silverSnow: false, azureMoon: true, verdantWind: false },
+            { name: '尽きざるもの', unique: false, crimsonFlower: true, silverSnow: true, azureMoon: true, verdantWind: true },
+            { name: 'フェイルノート', unique: true, crimsonFlower: false, silverSnow: false, azureMoon: true, verdantWind: true },
+            { name: 'アイギスの盾', unique: true, crimsonFlower: true, silverSnow: true, azureMoon: true, verdantWind: true },
+            { name: 'オハンの盾', unique: false, crimsonFlower: false, silverSnow: true, azureMoon: true, verdantWind: true },
+            { name: 'セイロスの盾', unique: false, crimsonFlower: false, silverSnow: true, azureMoon: true, verdantWind: true },
+            { name: 'カドゥケウスの杖', unique: false, crimsonFlower: true, silverSnow: true, azureMoon: true, verdantWind: true },
+            { name: 'テュルソスの杖', unique: true, crimsonFlower: true, silverSnow: true, azureMoon: true, verdantWind: true },
+            { name: 'ラファイルの宝珠', unique: true, crimsonFlower: false, silverSnow: true, azureMoon: true, verdantWind: true },
+            { name: 'ヴァジュラ', unique: true, crimsonFlower: true, silverSnow: true, azureMoon: true, verdantWind: true },
+            { name: 'ドローミの鎖環', unique: true, crimsonFlower: true, silverSnow: true, azureMoon: true, verdantWind: true },
+        ];
+
+        // 初期所属学級マッピング
+        const routeToHouse = {
+            'crimsonFlower': '黒鷲',
+            'silverSnow': '黒鷲',
+            'azureMoon': '青獅子',
+            'verdantWind': '金鹿'
+        };
+
+        // 最大出撃人数マッピング
+        const maxDeploymentMap = {
+            'normal': { 'crimsonFlower': 10, 'silverSnow': 10, 'azureMoon': 10, 'verdantWind': 10 },
+            'hard': { 'crimsonFlower': 12, 'silverSnow': 12, 'azureMoon': 12, 'verdantWind': 12 },
+            'lunatic': { 'crimsonFlower': 15, 'silverSnow': 15, 'azureMoon': 15, 'verdantWind': 15 }
+        };
+
+        // 支援データ（Supports.csvから主要なデータを抽出）
+        const supportData = {
+            'ベレト': ['エーデルガルト', 'ディミトリ', 'クロード', 'フレン', 'セテス', 'ギルベルト', 'アロイス', 'カトリーヌ', 'シャミア', 'ツィリル', 'マヌエラ', 'ハンネマン', 'アッシュ', 'フェリクス', 'シルヴァン', 'イングリット', 'メルセデス', 'アネット', 'ドゥドゥー', 'ヒルダ', 'ローレンツ', 'ラファエル', 'イグナーツ', 'リシテア', 'マリアンヌ', 'レオニー', 'カスパル', 'ベルナデッタ', 'ドロテア', 'ペトラ', 'リンハルト', 'フェルディナント', 'ヒューベルト', 'ユーリス', 'バルタザール', 'コンスタンツェ', 'ハピ'],
+            'ベレス': ['エーデルガルト', 'ディミトリ', 'クロード', 'フレン', 'セテス', 'ギルベルト', 'アロイス', 'カトリーヌ', 'シャミア', 'ツィリル', 'マヌエラ', 'ハンネマン', 'アッシュ', 'フェリクス', 'シルヴァン', 'イングリット', 'メルセデス', 'アネット', 'ドゥドゥー', 'ヒルダ', 'ローレンツ', 'ラファエル', 'イグナーツ', 'リシテア', 'マリアンヌ', 'レオニー', 'カスパル', 'ベルナデッタ', 'ドロテア', 'ペトラ', 'リンハルト', 'フェルディナント', 'ヒューベルト', 'ユーリス', 'バルタザール', 'コンスタンツェ', 'ハピ'],
+            'エーデルガルト': ['ベレト', 'ベレス', 'ヒューベルト', 'フェルディナント', 'リンハルト', 'カスパル', 'ベルナデッタ', 'ドロテア', 'ペトラ', 'マヌエラ', 'ハンネマン', 'ツィリル', 'セテス', 'フレン', 'ディミトリ', 'クロード', 'ユーリス', 'バルタザール', 'コンスタンツェ', 'ハピ'],
+            'ヒューベルト': ['エーデルガルト', 'フェルディナント', 'リンハルト', 'カスパル', 'ベルナデッタ', 'ドロテア', 'ペトラ', 'シャミア', 'ハピ'],
+            'フェルディナント': ['エーデルガルト', 'ヒューベルト', 'リンハルト', 'カスパル', 'ベルナデッタ', 'ドロテア', 'ペトラ', 'ローレンツ', 'マヌエラ', 'ハンネマン', 'メルセデス', 'イングリット', 'シルヴァン', 'ユーリス', 'バルタザール', 'コンスタンツェ', 'ハピ'],
+            'リンハルト': ['エーデルガルト', 'ヒューベルト', 'フェルディナント', 'カスパル', 'ベルナデッタ', 'ドロテア', 'ペトラ', 'マリアンヌ', 'フレン', 'コンスタンツェ', 'ハピ'],
+            'カスパル': ['エーデルガルト', 'ヒューベルト', 'フェルディナント', 'リンハルト', 'ベルナデッタ', 'ドロテア', 'ペトラ', 'ラファエル', 'シャミア', 'バルタザール', 'ハピ'],
+            'ベルナデッタ': ['エーデルガルト', 'ヒューベルト', 'フェルディナント', 'リンハルト', 'カスパル', 'ドロテア', 'ペトラ', 'アッシュ', 'ラファエル', 'ユーリス', 'ハピ'],
+            'ドロテア': ['エーデルガルト', 'ヒューベルト', 'フェルディナント', 'リンハルト', 'カスパル', 'ベルナデッタ', 'ペトラ', 'マヌエラ', 'イングリット', 'シルヴァン', 'フェリクス', 'ユーリス', 'バルタザール', 'コンスタンツェ', 'ハピ'],
+            'ペトラ': ['エーデルガルト', 'ヒューベルト', 'フェルディナント', 'リンハルト', 'カスパル', 'ベルナデッタ', 'ドロテア', 'イングリット', 'アッシュ', 'シルヴァン', 'ユーリス', 'バルタザール', 'コンスタンツェ', 'ハピ'],
+            'ディミトリ': ['ベレト', 'ベレス', 'ドゥドゥー', 'フェリクス', 'シルヴァン', 'イングリット', 'アッシュ', 'メルセデス', 'アネット', 'ギルベルト', 'カトリーヌ', 'ローレンツ', 'クロード', 'ユーリス', 'バルタザール', 'コンスタンツェ', 'ハピ'],
+            'ドゥドゥー': ['ベレト', 'ベレス', 'ディミトリ', 'フェリクス', 'シルヴァン', 'イングリット', 'アッシュ', 'メルセデス', 'アネット', 'ギルベルト', 'ユーリス', 'バルタザール', 'コンスタンツェ', 'ハピ'],
+            'フェリクス': ['ベレト', 'ベレス', 'ディミトリ', 'ドゥドゥー', 'シルヴァン', 'イングリット', 'アッシュ', 'メルセデス', 'アネット', 'ユーリス', 'バルタザール', 'コンスタンツェ', 'ハピ'],
+            'メルセデス': ['ベレト', 'ベレス', 'ディミトリ', 'ドゥドゥー', 'フェリクス', 'シルヴァン', 'イングリット', 'アッシュ', 'アネット', 'ユーリス', 'バルタザール', 'コンスタンツェ', 'ハピ'],
+            'アッシュ': ['ベレト', 'ベレス', 'ディミトリ', 'ドゥドゥー', 'フェリクス', 'シルヴァン', 'イングリット', 'メルセデス', 'アネット', 'ギルベルト', 'カトリーヌ', 'ツィリル', 'ユーリス', 'バルタザール', 'コンスタンツェ', 'ハピ'],
+            'アネット': ['ベレト', 'ベレス', 'ディミトリ', 'ドゥドゥー', 'フェリクス', 'シルヴァン', 'イングリット', 'アッシュ', 'メルセデス', 'ギルベルト', 'ユーリス', 'バルタザール', 'コンスタンツェ', 'ハピ'],
+            'シルヴァン': ['ベレト', 'ベレス', 'ディミトリ', 'ドゥドゥー', 'フェリクス', 'イングリット', 'アッシュ', 'メルセデス', 'アネット', 'ローレンツ', 'リシテア', 'マリアンヌ', 'ヒルダ', 'レオニー', 'フレン', 'マヌエラ', 'ユーリス', 'バルタザール', 'コンスタンツェ', 'ハピ'],
+            'イングリット': ['ベレト', 'ベレス', 'ディミトリ', 'ドゥドゥー', 'フェリクス', 'シルヴァン', 'アッシュ', 'メルセデス', 'アネット', 'ユーリス', 'バルタザール', 'コンスタンツェ', 'ハピ'],
+            'クロード': ['ベレト', 'ベレス', 'ローレンツ', 'ヒルダ', 'ラファエル', 'イグナーツ', 'リシテア', 'マリアンヌ', 'レオニー', 'セテス', 'フレン', 'シャミア', 'カトリーヌ', 'ディミトリ', 'エーデルガルト', 'ユーリス', 'バルタザール', 'コンスタンツェ', 'ハピ'],
+            'ローレンツ': ['ベレト', 'ベレス', 'クロード', 'ヒルダ', 'ラファエル', 'イグナーツ', 'リシテア', 'マリアンヌ', 'レオニー', 'ユーリス', 'バルタザール', 'コンスタンツェ', 'ハピ'],
+            'ラファエル': ['ベレト', 'ベレス', 'クロード', 'ローレンツ', 'ヒルダ', 'イグナーツ', 'リシテア', 'マリアンヌ', 'レオニー', 'ユーリス', 'バルタザール', 'コンスタンツェ', 'ハピ'],
+            'イグナーツ': ['ベレト', 'ベレス', 'クロード', 'ローレンツ', 'ヒルダ', 'ラファエル', 'リシテア', 'マリアンヌ', 'レオニー', 'ユーリス', 'バルタザール', 'コンスタンツェ', 'ハピ'],
+            'リシテア': ['ベレト', 'ベレス', 'クロード', 'ローレンツ', 'ヒルダ', 'ラファエル', 'イグナーツ', 'マリアンヌ', 'レオニー', 'ユーリス', 'バルタザール', 'コンスタンツェ', 'ハピ'],
+            'マリアンヌ': ['ベレト', 'ベレス', 'クロード', 'ローレンツ', 'ヒルダ', 'ラファエル', 'イグナーツ', 'リシテア', 'レオニー', 'リンハルト', 'ユーリス', 'バルタザール', 'コンスタンツェ', 'ハピ'],
+            'ヒルダ': ['ベレト', 'ベレス', 'クロード', 'ローレンツ', 'ラファエル', 'イグナーツ', 'リシテア', 'マリアンヌ', 'レオニー', 'ユーリス', 'バルタザール', 'コンスタンツェ', 'ハピ'],
+            'レオニー': ['ベレト', 'ベレス', 'クロード', 'ローレンツ', 'ヒルダ', 'ラファエル', 'イグナーツ', 'リシテア', 'マリアンヌ', 'ユーリス', 'バルタザール', 'コンスタンツェ', 'ハピ'],
+            'セテス': ['ベレト', 'ベレス', 'フレン', 'ギルベルト', 'アロイス', 'カトリーヌ', 'シャミア', 'ツィリル'],
+            'フレン': ['ベレト', 'ベレス', 'セテス', 'ギルベルト', 'アロイス', 'カトリーヌ', 'シャミア', 'ツィリル'],
+            'ハンネマン': ['ベレト', 'ベレス', 'アネット', 'ギルベルト'],
+            'マヌエラ': ['ベレト', 'ベレス', 'ドロテア', 'シルヴァン'],
+            'アロイス': ['ベレト', 'ベレス', 'メルセデス'],
+            'カトリーヌ': ['ベレト', 'ベレス', 'アッシュ', 'ドゥドゥー'],
+            'シャミア': ['ベレト', 'ベレス', 'ヒューベルト', 'カスパル'],
+            'ギルベルト': ['ベレト', 'ベレス', 'アネット', 'ドゥドゥー'],
+            'ツィリル': ['ベレト', 'ベレス', 'アッシュ', 'メルセデス'],
+            'ユーリス': ['ベレト', 'ベレス', 'エーデルガルト', 'ディミトリ', 'クロード', 'フェルディナント', 'ドロテア', 'ペトラ', 'ベルナデッタ', 'ヒルダ', 'ラファエル', 'イグナーツ', 'リシテア', 'マリアンヌ', 'レオニー', 'フェリクス', 'シルヴァン', 'イングリット', 'アッシュ', 'メルセデス', 'アネット', 'ドゥドゥー', 'バルタザール', 'コンスタンツェ', 'ハピ'],
+            'バルタザール': ['ベレト', 'ベレス', 'エーデルガルト', 'ディミトリ', 'クロード', 'フェルディナント', 'ドロテア', 'ペトラ', 'ベルナデッタ', 'ヒルダ', 'ラファエル', 'イグナーツ', 'リシテア', 'マリアンヌ', 'レオニー', 'フェリクス', 'シルヴァン', 'イングリット', 'アッシュ', 'メルセデス', 'アネット', 'ドゥドゥー', 'ユーリス', 'コンスタンツェ', 'ハピ'],
+            'コンスタンツェ': ['ベレト', 'ベレス', 'エーデルガルト', 'ディミトリ', 'クロード', 'フェルディナント', 'ドロテア', 'ペトラ', 'ベルナデッタ', 'ヒルダ', 'ラファエル', 'イグナーツ', 'リシテア', 'マリアンヌ', 'レオニー', 'フェリクス', 'シルヴァン', 'イングリット', 'アッシュ', 'メルセデス', 'アネット', 'ドゥドゥー', 'ユーリス', 'バルタザール', 'ハピ'],
+            'ハピ': ['ベレト', 'ベレス', 'エーデルガルト', 'ディミトリ', 'クロード', 'フェルディナント', 'ドロテア', 'ペトラ', 'ベルナデッタ', 'ヒルダ', 'ラファエル', 'イグナーツ', 'リシテア', 'マリアンヌ', 'レオニー', 'フェリクス', 'シルヴァン', 'イングリット', 'アッシュ', 'メルセデス', 'アネット', 'ドゥドゥー', 'ユーリス', 'バルタザール', 'コンスタンツェ']
+        };
+
+        // アプリケーション状態
+        let myUnits = [];
+        let weaponOwners = {}; // ユニーク武器の所有者を追跡
+        let supportPairs = {}; // 支援ペアを追跡 {unitName: partnerName}
+
+        // 初期化
+        function init() {
+            updateMaxDeployment();
+            loadInitialUnits();
+            setupEventListeners();
+        }
+
+        function setupEventListeners() {
+            document.getElementById('storyRoute').addEventListener('change', () => {
+                loadInitialUnits();
+                updateMaxDeployment();
+                renderUnits(); // ルート変更時に武器リストも更新
+            });
+            document.getElementById('difficulty').addEventListener('change', updateMaxDeployment);
+            document.getElementById('addUnitBtn').addEventListener('click', openAddUnitModal);
+        }
+
+        function updateMaxDeployment() {
+            const route = document.getElementById('storyRoute').value;
+            const difficulty = document.getElementById('difficulty').value;
+            const max = maxDeploymentMap[difficulty][route];
+            document.getElementById('maxDeployment').textContent = max;
+            updateCurrentCount();
+        }
+
+        function loadInitialUnits() {
+            const route = document.getElementById('storyRoute').value;
+            const protagonist = document.getElementById('protagonist').value;
+            const house = routeToHouse[route];
+            
+            // 主人公を追加
+            const protagUnit = mockUnits.find(u => u.name === protagonist);
+            if (protagUnit) {
+                myUnits = [protagUnit];
+            }
+
+            // 選択されたルートの学級メンバーを追加
+            const houseMembers = mockUnits.filter(u => u.house === house && u.name !== protagonist);
+            myUnits = [...myUnits, ...houseMembers];
+
+            // 銀雪ルートの場合、エーデルガルトとヒューベルトを除外
+            if (route === 'silverSnow') {
+                myUnits = myUnits.filter(u => u.name !== 'エーデルガルト' && u.name !== 'ヒューベルト');
+            }
+
+            weaponOwners = {};
+            supportPairs = {};
+            renderUnits();
+        }
+
+        function renderUnits() {
+            const grid = document.getElementById('unitsGrid');
+            grid.innerHTML = '';
+
+            myUnits.forEach((unit, index) => {
+                const card = createUnitCard(unit, index);
+                grid.appendChild(card);
+            });
+
+            updateCurrentCount();
+            updateAddButtonState();
+        }
+
+        function createUnitCard(unit, index) {
+            const card = document.createElement('div');
+            card.className = 'unit-card';
+            
+            const currentWeapon = unit.equippedWeapon || 'なし';
+            const weaponSelect = createWeaponSelect(unit, currentWeapon, index);
+            const supportSelect = createSupportSelect(unit, index);
+            
+            card.innerHTML = `
+                <div class="unit-header">
+                    <div>
+                        <div class="unit-name">${unit.name}</div>
+                        <div class="unit-house">${unit.house}</div>
+                    </div>
+                    <button class="remove-unit-btn" onclick="removeUnit(${index})">削除</button>
+                </div>
+                <div class="unit-details">
+                    <div class="detail-row">
+                        <label>武器:</label>
+                        ${weaponSelect}
+                    </div>
+                    <div class="detail-row">
+                        <label>支援:</label>
+                        ${supportSelect}
+                    </div>
+                </div>
+            `;
+            
+            return card;
+        }
+
+        function createWeaponSelect(unit, currentWeapon, unitIndex) {
+            const route = document.getElementById('storyRoute').value;
+            let html = '<select onchange="equipWeapon(' + unitIndex + ', this.value)">';
+            
+            // 選択されたルートで入手可能な武器のみを表示
+            const availableWeapons = mockWeapons.filter(weapon => {
+                switch(route) {
+                    case 'crimsonFlower': return weapon.crimsonFlower;
+                    case 'silverSnow': return weapon.silverSnow;
+                    case 'azureMoon': return weapon.azureMoon;
+                    case 'verdantWind': return weapon.verdantWind;
+                    default: return true;
+                }
+            });
+            
+            availableWeapons.forEach(weapon => {
+                const isSelected = weapon.name === currentWeapon;
+                const isUnique = weapon.unique;
+                const isTaken = isUnique && weaponOwners[weapon.name] && weaponOwners[weapon.name] !== unit.name;
+                const owner = isTaken ? weaponOwners[weapon.name] : '';
+                
+                let optionText = weapon.name;
+                if (isUnique) {
+                    optionText += ' ⭐';
+                }
+                
+                html += `<option value="${weapon.name}" ${isSelected ? 'selected' : ''} ${isTaken ? 'disabled' : ''}>${optionText}${isTaken ? ` (${owner}装備中)` : ''}</option>`;
+            });
+            
+            html += '</select>';
+            return html;
+        }
+
+        function createSupportSelect(unit, unitIndex) {
+            const availableSupports = supportData[unit.name] || [];
+            const currentSupport = supportPairs[unit.name] || 'なし';
+            
+            // 編成内のユニットのみをフィルタリング
+            const unitNames = myUnits.map(u => u.name);
+            const availableInTeam = availableSupports.filter(name => unitNames.includes(name));
+            
+            let html = '<select onchange="setSupport(' + unitIndex + ', this.value)">';
+            html += `<option value="なし" ${currentSupport === 'なし' ? 'selected' : ''}>なし</option>`;
+            
+            availableInTeam.forEach(partnerName => {
+                // 既に他のユニットに選択されている場合は選択不可
+                const isTaken = Object.values(supportPairs).includes(partnerName) && supportPairs[unit.name] !== partnerName;
+                const isSelected = currentSupport === partnerName;
+                
+                html += `<option value="${partnerName}" ${isSelected ? 'selected' : ''} ${isTaken ? 'disabled' : ''}>${partnerName}${isTaken ? ' (選択済み)' : ''}</option>`;
+            });
+            
+            html += '</select>';
+            return html;
+        }
+
+        function setSupport(unitIndex, partnerName) {
+            const unit = myUnits[unitIndex];
+            
+            // 既存の支援を解除
+            if (supportPairs[unit.name]) {
+                const oldPartner = supportPairs[unit.name];
+                // 双方向の関係を解除
+                if (supportPairs[oldPartner] === unit.name) {
+                    delete supportPairs[oldPartner];
+                }
+                delete supportPairs[unit.name];
+            }
+            
+            // 新しい支援を設定
+            if (partnerName && partnerName !== 'なし') {
+                // 既に他のユニットに選択されている場合は解除
+                const currentOwner = Object.keys(supportPairs).find(name => supportPairs[name] === partnerName);
+                if (currentOwner) {
+                    delete supportPairs[currentOwner];
+                }
+                
+                supportPairs[unit.name] = partnerName;
+                // 双方向の関係を設定（相手の支援データにも自分が含まれている場合）
+                const partnerUnit = myUnits.find(u => u.name === partnerName);
+                if (partnerUnit && (supportData[partnerName] || []).includes(unit.name)) {
+                    supportPairs[partnerName] = unit.name;
+                }
+            }
+            
+            renderUnits();
+        }
+
+        function equipWeapon(unitIndex, weaponName) {
+            const unit = myUnits[unitIndex];
+            const weapon = mockWeapons.find(w => w.name === weaponName);
+            
+            if (!weapon) return;
+            
+            // ユニーク武器の場合、既存の所有者から外す
+            if (weapon.unique && weaponOwners[weaponName] && weaponOwners[weaponName] !== unit.name) {
+                const previousOwner = myUnits.find(u => u.name === weaponOwners[weaponName]);
+                if (previousOwner) {
+                    previousOwner.equippedWeapon = 'なし';
+                }
+            }
+            
+            // 現在の武器を外す
+            if (unit.equippedWeapon && mockWeapons.find(w => w.name === unit.equippedWeapon)?.unique) {
+                delete weaponOwners[unit.equippedWeapon];
+            }
+            
+            // 新しい武器を装備
+            unit.equippedWeapon = weaponName;
+            if (weapon.unique) {
+                weaponOwners[weaponName] = unit.name;
+            }
+            
+            renderUnits();
+        }
+
+        function removeUnit(index) {
+            const unit = myUnits[index];
+            
+            // ユニーク武器を外す
+            if (unit.equippedWeapon && mockWeapons.find(w => w.name === unit.equippedWeapon)?.unique) {
+                delete weaponOwners[unit.equippedWeapon];
+            }
+            
+            // 支援関係を解除
+            if (supportPairs[unit.name]) {
+                const partner = supportPairs[unit.name];
+                delete supportPairs[unit.name];
+                if (supportPairs[partner] === unit.name) {
+                    delete supportPairs[partner];
+                }
+            }
+            
+            myUnits.splice(index, 1);
+            renderUnits();
+        }
+
+        function updateCurrentCount() {
+            document.getElementById('currentCount').textContent = myUnits.length;
+        }
+
+        function updateAddButtonState() {
+            const btn = document.getElementById('addUnitBtn');
+            btn.disabled = myUnits.length >= 20;
+        }
+
+        function openAddUnitModal() {
+            const modal = document.getElementById('addUnitModal');
+            const list = document.getElementById('availableUnitsList');
+            list.innerHTML = '';
+            
+            const currentNames = new Set(myUnits.map(u => u.name));
+            const available = mockUnits.filter(u => !currentNames.has(u.name));
+            
+            available.forEach(unit => {
+                const option = document.createElement('div');
+                option.className = 'unit-option';
+                option.textContent = `${unit.name} (${unit.house})`;
+                option.onclick = () => addUnit(unit);
+                list.appendChild(option);
+            });
+            
+            modal.style.display = 'flex';
+        }
+
+        function closeAddUnitModal() {
+            document.getElementById('addUnitModal').style.display = 'none';
+        }
+
+        function addUnit(unit) {
+            if (myUnits.length >= 20) return;
+            
+            unit.equippedWeapon = 'なし';
+            myUnits.push(unit);
+            renderUnits();
+            closeAddUnitModal();
+        }
+
+        // モーダル外クリックで閉じる
+        window.onclick = function(event) {
+            const modal = document.getElementById('addUnitModal');
+            if (event.target === modal) {
+                closeAddUnitModal();
+            }
+        }
+
+        // 初期化
+        init();
+    </script>
+</body>
+</html>
+
